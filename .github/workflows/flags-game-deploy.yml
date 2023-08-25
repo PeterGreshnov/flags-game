@@ -23,7 +23,7 @@ jobs:
       - name: Output files & folders
         run: ls -la
       - name: S3 Deploy
-        uses: Reggionick/s3-deploy@v3.2.0
+        uses: Reggionick/s3-deploy@v4
         with:
             folder: ./
             bucket: ${{ secrets.S3_BUCKET }}
