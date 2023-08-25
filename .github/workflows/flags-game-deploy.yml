@@ -31,6 +31,7 @@ jobs:
             dist-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
             invalidation: /*
             delete-removed: true
+            private: true
             no-cache: false
             files-to-include: ".*/*,*/*,**"
 
