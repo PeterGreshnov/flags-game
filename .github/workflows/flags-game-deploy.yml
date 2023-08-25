@@ -25,14 +25,14 @@ jobs:
       - name: S3 Deploy
         uses: Reggionick/s3-deploy@v4
         with:
-            folder: ./
-            bucket: ${{ secrets.S3_BUCKET }}
-            bucket-region: ${{ secrets.S3_BUCKET_REGION }}
-            dist-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
-            invalidation: /*
-            delete-removed: true
-            private: true
-            no-cache: false
-            files-to-include: ".*/*,*/*,**"
+          folder: ./
+          bucket: ${{ secrets.S3_BUCKET }}
+          bucket-region: ${{ secrets.S3_BUCKET_REGION }}
+          dist-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+          invalidation: /*
+          delete-removed: true
+          no-cache: false
+          private: true
+          files-to-include: ".*/*,*/*,**"
 
 
