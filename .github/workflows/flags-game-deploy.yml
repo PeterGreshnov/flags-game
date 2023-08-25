@@ -25,16 +25,5 @@ jobs:
       - name: S3 Deploy
         run: 
           aws s3 sync . s3://${{ secrets.S3_BUCKET }} --exclude "readme.md" --exclude ".github/*" --exclude ".git/*" --delete
-        # uses: Reggionick/s3-deploy@v4
-        # with:
-        #   folder: ./
-        #   bucket: ${{ secrets.S3_BUCKET }}
-        #   bucket-region: ${{ secrets.S3_BUCKET_REGION }}
-        #   dist-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
-        #   invalidation: /*
-        #   delete-removed: true
-        #   no-cache: false
-        #   private: true
-        #   files-to-include: ".*/*,*/*,**"
-
-
+      - name: Invalidate dashboard cloudfront
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
