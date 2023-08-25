@@ -1,0 +1,45 @@
+name: Flags Game Deploy
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-deploy-dev:
+    environment: main
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Get AWS permissions
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::807879292370:role/s3-limited-access-ridy-marketing-dev
+          aws-region: us-east-2
+      - name: Get code
+        uses: actions/checkout@v3
+    #   - name: Load & cache dependencies
+    #     uses: ./.github/actions/cached-deps
+    #   - name: Build website
+    #     run: npm run build:prod
+    #   - name: Upload artifacts
+    #     uses: actions/upload-artifact@v3
+    #     with:
+    #       name: dist-files-dev
+    #       path: dist
+      - name: Output files & folders
+        run: ls -la
+      - name: S3 Deploy
+        uses: Reggionick/s3-deploy@v3.2.0
+        with:
+            folder: ./
+            bucket: ${{ secrets.S3_BUCKET }}
+            bucket-region: ${{ secrets.S3_BUCKET_REGION }}
+            dist-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+            invalidation: /*
+            delete-removed: true
+            no-cache: true
+            private: true
+            filesToInclude: ".*/*,*/*,**"
+
+
