@@ -16,6 +16,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::807879292370:role/github-petergreshnov-flags-game
           aws-region: us-east-2
+          role-session-name: GitHub_to_AWS_via_FederatedOIDC
           retry-max-attempts: 3
       - name: Get code
         uses: actions/checkout@v3
