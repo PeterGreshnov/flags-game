@@ -1836,11 +1836,11 @@ function showNFlags(number) {
     newDiv.id = "flagContainer";
 
     const newImg = document.createElement("img");
-    newImg.classList.add("flag-img");
-    newImg.src = `flags/4x3/${countries[countryNumbers[index]].alpha2}.svg`;
+    newImg.classList.add("flag-img", "noselect");
+    newImg.src = `flags/4x3/${countries[countryNumbers[index]].alpha2.toLowerCase()}.svg`;
 
     const newLabel = document.createElement("div");
-    newLabel.classList.add("flagLabel");
+    newLabel.classList.add("flagLabel", "noselect");
     const newLabelText = document.createTextNode(
       countries[countryNumbers[index]].name
     );
