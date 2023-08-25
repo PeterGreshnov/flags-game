@@ -4,7 +4,7 @@ on:
     branches:
       - main
 jobs:
-  build-deploy-dev:
+  deploy-flags-game-S3:
     environment: main
     runs-on: ubuntu-latest
     permissions:
