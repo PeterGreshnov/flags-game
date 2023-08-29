@@ -25,5 +25,5 @@ jobs:
       - name: S3 Deploy
         run: 
           aws s3 sync . s3://${{ secrets.S3_BUCKET }} --exclude "readme.md" --exclude ".github/*" --exclude ".git/*" --delete --size-only
-      - name: Creat Cloudfront Invalidation
+      - name: Create Cloudfront Invalidation
         run: aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"

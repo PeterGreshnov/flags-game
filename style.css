@@ -21,6 +21,7 @@ body {
     background-repeat: no-repeat;
     background-position: left top;
     min-height: 100%;
+    color: #814499;
 }
 
 table,
@@ -44,14 +45,15 @@ h1 {
 .flagContainer {
   width: 20%;
   margin-bottom: 40px;
-  border: 1px solid;
+  border: 1px solid #ADA3B1;
   border-radius: 5px;
   padding: 1%;
-  background-color: blanchedalmond;
+  background-color: #FFE6E3;
   display: flex;
   flex-direction: column;
   align-items: center;
   max-height: min-content;
+  box-shadow: 0 4px 8px 0 #A6524A;
 }
 
 .flag-img {
@@ -76,8 +78,9 @@ button.buttonNext {
   padding: 20px;
   margin: 10px;
   font-size: xx-large;
-  background-color: aliceblue;
+  background-color: #FFE6E3;
   border-radius: 15px;
+  color: #814499;
 }
 
 .buttonContainer {
