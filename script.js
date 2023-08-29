@@ -2804,8 +2804,8 @@ var countries = [
 
 var countriesNumber = countries.length;
 
-function getRandomInt() {
-  return Math.floor(Math.random() * countriesNumber);
+function getRandomInt(number = countriesNumber) {
+  return Math.floor(Math.random() * number);
 }
 
 function getNRandomInts(requiredNumber) {
@@ -2819,48 +2819,19 @@ function getNRandomInts(requiredNumber) {
 }
 
 function showNFlags(number) {
-  const table = document.getElementById("flagsTable");
-  for (var i = 1; i < table.rows.length; ) {
-    table.deleteRow(i);
-  }
-
+  // Clear Flags
   const flagsContainer = document.getElementById("flagsContainer");
   flagsContainer.replaceChildren();
 
+  // Get new random IDs for flags
   const countryNumbers = getNRandomInts(number);
+
   // Declare random countries list
   let nCountriesArrayJS = [];
 
   for (let index = 0; index < number; index++) {
     // Push randomly selected countries into the array;
     nCountriesArrayJS.push(countries[countryNumbers[index]]);
-
-    // Prepare country table row
-    const newTR = document.createElement("tr");
-
-    const newTDCountry = document.createElement("td");
-    const newTDCountryText = document.createTextNode(
-      countries[countryNumbers[index]].name
-    );
-    newTDCountry.appendChild(newTDCountryText);
-
-    const newTDCode = document.createElement("td");
-    const newTDCodeText = document.createTextNode(
-      countries[countryNumbers[index]].alpha2
-    );
-    newTDCode.appendChild(newTDCodeText);
-
-    const newTDFlag = document.createElement("td");
-    const newTDFlagText = document.createTextNode(
-      countries[countryNumbers[index]].alpha2
-    );
-    newTDFlag.appendChild(newTDFlagText);
-
-    newTR.appendChild(newTDCountry);
-    newTR.appendChild(newTDCode);
-    newTR.appendChild(newTDFlag);
-
-    table.appendChild(newTR);
 
     // Prepare country div
     const newDiv = document.createElement("div");
@@ -2869,7 +2840,9 @@ function showNFlags(number) {
 
     const newImg = document.createElement("img");
     newImg.classList.add("flag-img", "noselect");
-    newImg.src = `flags/4x3/${countries[countryNumbers[index]].alpha2.toLowerCase()}.svg`;
+    newImg.src = `flags/4x3/${countries[
+      countryNumbers[index]
+    ].alpha2.toLowerCase()}.svg`;
 
     const newLabel = document.createElement("div");
     newLabel.classList.add("flagLabel", "noselect");
@@ -2890,19 +2863,259 @@ function showNFlags(number) {
     elem.onclick = function () {
       elem.querySelector(".flagLabel").style.opacity = 1;
       countryName = elem.querySelector(".flagLabel").innerHTML;
-      speach(countryName);
+      speech(countryName);
     };
   });
 }
 
-function speach(text) {
-    let utterance = new SpeechSynthesisUtterance(text);
-    speechSynthesis.speak(utterance);
+function speech(text) {
+  let utterance = new SpeechSynthesisUtterance(text);
+  speechSynthesis.speak(utterance);
+}
+
+function clearMainContainer() {
+  document.getElementById("mainContainer").replaceChildren();
+}
+
+function clearflagsContainer() {
+  document.getElementById("flagsContainer").replaceChildren();
+}
+
+function clearbuttonContainer() {
+  document.getElementById("buttonContainer").replaceChildren();
+}
+
+function prepareMainContainerStart() {
+  const mainContainer = document.getElementById("mainContainer");
+
+  mainContainer.appendChild(document.createElement("h1"));
+  const buttonContainer = document.createElement("div");
+  buttonContainer.classList.add("buttonContainer");
+  buttonContainer.id = "buttonContainer";
+  mainContainer.appendChild(buttonContainer);
+}
+
+function renderStartPage() {
+  document.querySelector("h1").innerHTML = `FUN WITH FLAGS`;
+  document.getElementById("header").style.display = "none";
+
+  buttonLearn = document.createElement("button");
+  buttonLearn.classList.add("buttonNext");
+  buttonLearn.id = "buttonLearn";
+  buttonLearn.onclick = function () {
+    renderLearnPage();
+  };
+  const buttonLearnText = document.createTextNode("Learn Countries");
+  buttonLearn.appendChild(buttonLearnText);
+
+  buttonQuiz = document.createElement("button");
+  buttonQuiz.classList.add("buttonNext");
+  buttonQuiz.id = "buttonQuiz";
+  buttonQuiz.onclick = function () {
+    renderQuizPage();
+  };
+
+  const buttonQuizText = document.createTextNode("Quiz Countries");
+  buttonQuiz.appendChild(buttonQuizText);
+
+  document.getElementById("buttonContainer").appendChild(buttonLearn);
+  document.getElementById("buttonContainer").appendChild(buttonQuiz);
+}
+
+function renderLearnPage() {
+  clearMainContainer();
+
+  document.getElementById("header").style.display = "flex";
+
+  prepareMainContainerLearn();
+
+  showNFlags(4);
+}
+
+function prepareMainContainerLearn() {
+  const mainContainer = document.getElementById("mainContainer");
+
+  mainContainer.appendChild(document.createElement("h1"));
+  document.querySelector("h1").innerHTML = `LEARN FLAGS`;
+
+  const flagsContainer = document.createElement("div");
+  flagsContainer.classList.add("flagsContainer");
+  flagsContainer.id = "flagsContainer";
+  mainContainer.appendChild(flagsContainer);
+
+  const buttonContainer = document.createElement("div");
+  buttonContainer.classList.add("buttonContainer");
+  buttonContainer.id = "buttonContainer";
+  mainContainer.appendChild(buttonContainer);
+
+  buttonNext = document.createElement("button");
+  buttonNext.classList.add("buttonNext");
+  buttonNext.id = "buttonNext";
+  buttonNext.onclick = function () {
+    showNFlags(4);
+  };
+  const buttonNextText = document.createTextNode("NEXT");
+  buttonNext.appendChild(buttonNextText);
+
+  buttonContainer.appendChild(buttonNext);
+}
+
+function prepareMainContainerQuiz() {
+  const mainContainer = document.getElementById("mainContainer");
+
+  mainContainer.appendChild(document.createElement("h1"));
+  document.querySelector("h1").innerHTML = `What Country is this?`;
+
+  const quizContainer = document.createElement("div");
+  quizContainer.classList.add("quizContainer");
+  quizContainer.id = "quizContainer";
+  mainContainer.appendChild(quizContainer);
+
+  const buttonContainer = document.createElement("div");
+  buttonContainer.classList.add("buttonContainer");
+  buttonContainer.id = "buttonContainer";
+  mainContainer.appendChild(buttonContainer);
+
+  buttonNext = document.createElement("button");
+  buttonNext.classList.add("buttonNext");
+  buttonNext.id = "buttonNext";
+  buttonNext.onclick = function () {
+    showQuizQuestion(4);
+  };
+  const buttonNextText = document.createTextNode("NEXT");
+  buttonNext.appendChild(buttonNextText);
+
+  buttonContainer.appendChild(buttonNext);
+}
+
+function renderQuizPage() {
+  clearMainContainer();
+  document.getElementById("header").style.display = "flex";
+
+  prepareMainContainerQuiz();
+
+  showQuizQuestion(4);
+}
+
+function showQuizQuestion(number) {
+  let quizContainer = document.getElementById("quizContainer");
+  quizContainer.replaceChildren();
+
+  const countryNumbers = getNRandomInts(number);
+
+  console.log(countryNumbers);
+
+  const coutryToDisplay = getRandomInt(number);
+
+  console.log(coutryToDisplay, countryNumbers[coutryToDisplay]);
+
+  // Prepare country img div
+  const quizFlagContainer = document.createElement("div");
+  quizFlagContainer.classList.add("quizFlagContainer");
+  quizFlagContainer.id = "quizFlagContainer";
+  quizFlagContainer.setAttribute(
+    "country-code",
+    countries[countryNumbers[coutryToDisplay]].alpha2.toLowerCase()
+  );
+
+  quizFlagContainer.setAttribute(
+    "country-name",
+    countries[countryNumbers[coutryToDisplay]].name
+  );
+
+  const flagImg = document.createElement("img");
+  flagImg.classList.add("flag-img", "noselect");
+  flagImg.src = `flags/4x3/${countries[
+    countryNumbers[coutryToDisplay]
+  ].alpha2.toLowerCase()}.svg`;
+
+  quizFlagContainer.appendChild(flagImg);
+  quizFlagContainer.onclick = function () {
+    speech(this.getAttribute("country-name"));
   }
 
+  quizContainer.appendChild(quizFlagContainer);
+
+  const quizOptionsContainer = document.createElement("div");
+  quizOptionsContainer.classList.add("quizOptionsContainer");
+  quizOptionsContainer.id = "quizOptionsContainer";
+
+  quizContainer.appendChild(quizOptionsContainer);
+
+  let nCountriesArrayJS = [];
+
+  for (let index = 0; index < number; index++) {
+    // Push randomly selected countries into the array;
+    nCountriesArrayJS.push(countries[countryNumbers[index]]);
+
+    const optionDiv = document.createElement("div");
+    optionDiv.classList.add("quizOption", "noselect");
+    optionDiv.setAttribute(
+      "country-code",
+      countries[countryNumbers[index]].alpha2.toLowerCase()
+    );
+    optionDiv.setAttribute(
+      "country-name",
+      countries[countryNumbers[index]].name
+    );
+
+    const optionLabel = document.createTextNode(
+      countries[countryNumbers[index]].name
+    );
+
+    optionDiv.appendChild(optionLabel);
+    optionDiv.onclick = function () {
+      validateQuiz(this);
+    };
+
+    quizOptionsContainer.appendChild(optionDiv);
+  }
+
+  console.log(nCountriesArrayJS);
+}
+
+function validateQuiz(element) {
+
+  const countryName = element.getAttribute("country-name");
+
+  
+  
+  const rnd = getRandomInt(2);
+  pigAudio = new Audio(`assets/sounds/pig${rnd}.wav`);
+  dogAudio = new Audio(`assets/sounds/dog${rnd}.wav`);
+
+  const correctCountry = document
+    .getElementById("quizFlagContainer")
+    .getAttribute("country-code");
+
+  const currentAnswer = element.getAttribute("country-code");
+
+  if (currentAnswer === correctCountry) {
+    dogAudio.play();
+    element.classList.add("correctOption");
+  } else {
+    pigAudio.play();
+    element.classList.add("incorrectOption");
+  }
+
+  setTimeout(function() {
+    speech(countryName);
+  }, 1000);
+}
+
+function play(path) {
+  audio = new Audio(path);
+  audio.play();
+}
+
+function startPage() {
+  clearMainContainer();
+  prepareMainContainerStart();
+  renderStartPage();
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-  showNFlags(4);
-
+  clearMainContainer();
+  prepareMainContainerStart();
+  renderStartPage();
 });
-
-
